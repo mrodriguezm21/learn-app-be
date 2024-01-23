@@ -1,0 +1,63 @@
+service: training-service
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors: true
+  environment:
+    TRAINING_TABLE: training
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+          Resource:
+            - arn:aws:dynamodb:us-east-1:626567425764:table/training
+
+functions:
+  getTrainings:
+    handler: getTrainings/handler.getTrainings
+    events:
+      - http:
+          path: trainings
+          method: GET
+  createTraining:
+    handler: createTraining/handler.createTraining
+    events:
+      - http:
+          path: trainings
+          method: POST
+          request:
+            schemas:
+              application/json: ${file(models/training.json)}
+  # findTraining:
+  #   handler: findTraining/handler.findTraining
+  #   events:
+  #     - http:
+  #         path: trainings/search
+  #         method: GET
+  #         request:
+  #           parameters:
+  #             querystrings:
+  #               name: true
+
+resources:
+  Resources:
+    TrainingTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: training
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

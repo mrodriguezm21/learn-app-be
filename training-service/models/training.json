@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Training",
+  "description": "A training path",
+  "type": "object",
+  "properties": {
+    "studentId": {
+      "description": "The unique identifier for a student",
+      "type": "string"
+    },
+    "trainerId": {
+      "description": "The unique identifier for a trainer",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the training",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the training",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The unique identifier for a training",
+          "type": "string"
+        },
+        "trainingType": {
+          "description": "The type of training",
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "description": "Date of the training",
+      "type": "string"
+    },
+    "duration": {
+      "description": "Duration of the training",
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": true
+    },
+    "description": {
+      "description": "Description of the training",
+      "type": "string"
+    }
+  },
+  "required": ["studentId", "trainerId", "name", "type", "duration"]
+}
