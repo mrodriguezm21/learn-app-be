@@ -1,6 +1,9 @@
 service: auth-service
 frameworkVersion: "3"
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
   runtime: nodejs18.x
