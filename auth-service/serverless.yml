@@ -1,0 +1,47 @@
+service: auth-service
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors: true
+  environment:
+    AUTH_TABLE: auth
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+          Resource:
+            - arn:aws:dynamodb:us-east-1:626567425764:table/auth
+
+functions:
+  register:
+    handler: registration/handler.register
+    events:
+      - http:
+          path: register
+          method: POST
+          request:
+            schemas:
+              application/json: ${file(models/registration.json)}
+
+resources:
+  Resources:
+    AuthTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: auth
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

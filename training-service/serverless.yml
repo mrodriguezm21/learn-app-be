@@ -35,16 +35,16 @@ functions:
           request:
             schemas:
               application/json: ${file(models/training.json)}
-  # findTraining:
-  #   handler: findTraining/handler.findTraining
-  #   events:
-  #     - http:
-  #         path: trainings/search
-  #         method: GET
-  #         request:
-  #           parameters:
-  #             querystrings:
-  #               name: true
+  findTraining:
+    handler: findTraining/handler.findTraining
+    events:
+      - http:
+          path: trainings/search
+          method: GET
+          request:
+            parameters:
+              querystrings:
+                name: true
 
 resources:
   Resources:

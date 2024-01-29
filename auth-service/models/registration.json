@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Registration",
+    "description": "A registration of a student or trainer",
+    "type": "object",
+    "properties": {
+      "email": {
+        "description": "The unique identifier for an account",
+        "type": "string"
+      },
+      "password": {
+        "description": "The password for an account",
+        "type": "string"
+      },
+      "username": {
+        "description": "The username for an account",
+        "type": "string"
+      },
+      "firstName": {
+        "description": "The first name of the account holder",
+        "type": "string"
+      },
+      "lastName": {
+        "description": "The first name of the account holder",
+        "type": "string"
+      },
+      "specialization": {
+        "description": "The specialization of the trainer",
+        "type": "string"
+      },
+      "dateOfBirth": {
+        "description": "The date of birth of the account holder",
+        "type": "string"
+      },
+      "address": {
+        "description": "The address of the account holder",
+        "type": "string"
+      },
+      "role": {
+        "description": "The role of the account holder",
+        "type": "string",
+        "default": "student"
+      }
+    },
+    "required": ["email", "firstName", "lastName"]
+  }
+  
