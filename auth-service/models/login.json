@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Login",
+    "description": "Login schema",
+    "type": "object",
+    "properties": {
+      "email": {
+        "description": "The unique identifier for an account",
+        "type": "string"
+      },
+      "password": {
+        "description": "The password for an account",
+        "type": "string"
+      }
+    },
+    "required": ["email", "password"]
+  }
+  

@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 import { createResponse } from "../libs/index.js";
 import { generateFromEmail } from "unique-username-generator";
 import bcrypt from "bcryptjs";
@@ -36,6 +36,15 @@ export const register = async (event) => {
     role,
   };
   try {
+    const { Item: userExist } = await docClient.send(
+      new GetCommand({
+        TableName: process.env.AUTH_TABLE,
+        Key: { email },
+      })
+    );
+    if (userExist) {
+      return createResponse(409, { message: "Email is taken" });
+    }
     await docClient.send(
       new PutCommand({
         TableName: process.env.AUTH_TABLE,

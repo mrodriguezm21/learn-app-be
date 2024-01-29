@@ -29,6 +29,15 @@ functions:
           request:
             schemas:
               application/json: ${file(models/registration.json)}
+  login:
+    handler: login/handler.login
+    events:
+      - http:
+          path: login
+          method: POST
+          request:
+            schemas:
+              application/json: ${file(models/login.json)}
 
 resources:
   Resources:
