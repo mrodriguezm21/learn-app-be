@@ -19,6 +19,7 @@ provider:
             - dynamodb:Scan
             - dynamodb:GetItem
             - dynamodb:PutItem
+            - dynamodb:UpdateItem
           Resource:
             - arn:aws:dynamodb:us-east-1:626567425764:table/auth
 
@@ -27,7 +28,7 @@ functions:
     handler: registration/handler.register
     events:
       - http:
-          path: register
+          path: auth/register
           method: POST
           request:
             schemas:
@@ -36,7 +37,7 @@ functions:
     handler: login/handler.login
     events:
       - http:
-          path: login
+          path: auth/login
           method: POST
           request:
             schemas:
