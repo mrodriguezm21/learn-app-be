@@ -42,6 +42,12 @@ functions:
           request:
             schemas:
               application/json: ${file(models/login.json)}
+  logout:
+    handler: logout/handler.logout
+    events:
+      - http:
+          path: auth/logout
+          method: GET
 
 resources:
   Resources:

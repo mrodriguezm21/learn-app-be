@@ -16,7 +16,7 @@ export const register = async (event) => {
     specialization,
     dateOfBirth,
     address,
-    role,
+    role = "student",
   } = JSON.parse(event.body);
   const generatedPassword = passwordGenerator.generate({
     length: 10,

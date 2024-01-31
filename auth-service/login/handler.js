@@ -38,7 +38,7 @@ export const login = async (event) => {
       return createResponse(401, { message: "Invalid email or password" });
     }
     delete user.password;
-    const token = generateToken(email);
+    const token = generateToken(email, user?.role);
     return createResponse(200, {
       token,
       userData: { ...user, isActive: true },
@@ -49,8 +49,8 @@ export const login = async (event) => {
   }
 };
 
-const generateToken = (email) => {
-  const data = { sub: email };
+const generateToken = (email, role ) => {
+  const data = { sub: email, role};
   const secret = process.env.JWT_SECRET;
   return jwt.sign(data, secret);
 };
