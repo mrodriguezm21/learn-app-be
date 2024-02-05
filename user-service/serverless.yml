@@ -1,0 +1,43 @@
+service: user-service
+frameworkVersion: "3"
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors: true
+  environment:
+    AUTH_TABLE: auth
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:DeleteItem
+            - dynamodb:UpdateItem
+          Resource:
+            - arn:aws:dynamodb:us-east-1:626567425764:table/auth
+
+functions:
+  getMe:
+    handler: getMe/handler.getMe
+    events:
+      - http:
+          path: users/me
+          method: GET
+  deleteMe:
+    handler: deleteMe/handler.deleteMe
+    events:
+      - http:
+          path: users/me
+          method: DELETE
+  updatePassword:
+    handler: updatePassword/handler.updatePassword
+    events:
+      - http:
+          path: users/update-password
+          method: PUT
