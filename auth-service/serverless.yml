@@ -38,6 +38,17 @@ functions:
       - http:
           path: auth/login
           method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Auth-Token
+              - X-Auth-Email
           request:
             schemas:
               application/json: ${file(models/login.json)}
@@ -63,3 +74,17 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    ApiGatewayRestApi:
+      Type: "AWS::ApiGateway::RestApi"
+      Properties:
+        Name: "auth-service"
+    GatewayResponseDefault4XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: "DEFAULT_4XX"
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
+      

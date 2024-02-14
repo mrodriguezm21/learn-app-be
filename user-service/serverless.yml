@@ -29,6 +29,17 @@ functions:
       - http:
           path: users/me
           method: GET
+          cors: 
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Auth-Token
+              - X-Auth-Email
   deleteMe:
     handler: deleteMe/handler.deleteMe
     events:
@@ -41,3 +52,19 @@ functions:
       - http:
           path: users/update-password
           method: PUT
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: "AWS::ApiGateway::RestApi"
+      Properties:
+        Name: "user-service"
+    GatewayResponseDefault4XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: "DEFAULT_4XX"
+        RestApiId:
+          Ref: "ApiGatewayRestApi"

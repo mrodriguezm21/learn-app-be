@@ -26,6 +26,17 @@ functions:
       - http:
           path: trainings
           method: GET
+          cors: 
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Auth-Token
+              - X-Auth-Email
   createTraining:
     handler: createTraining/handler.createTraining
     events:
