@@ -29,6 +29,17 @@ functions:
       - http:
           path: auth/register
           method: POST
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Auth-Token
+              - X-Auth-Email
           request:
             schemas:
               application/json: ${file(models/registration.json)}
@@ -58,6 +69,17 @@ functions:
       - http:
           path: auth/logout
           method: GET
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - X-Auth-Token
+              - X-Auth-Email
 
 resources:
   Resources:
